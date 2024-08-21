@@ -1,0 +1,15 @@
+{% extends "blog/admin.html" %}
+{% block title %}
+    Dashboard - post detail
+{% endblock title %}
+{% block content %}
+   <div class="justify-content:center">
+    <h2 class="text-center my-5">Êtes-vous sûrs de vouloir supprimer cet article ?</h2>
+    <p>{{post.title}}</p>
+    <form method="post">
+        {% csrf_token %}
+        <button type="submit" class="btn btn-danger btn-sm">Supprimer</button>
+        <a href="{% url 'dashboard_post' %}" class="btn btn-success btn-sm">Annuler</a>
+    </form>
+   </div>
+{% endblock content %}

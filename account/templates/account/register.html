@@ -1,0 +1,44 @@
+{% extends "blog/base.html" %}
+{% block content %}
+<h1>Register Form</h1>
+<form method="post">
+{% csrf_token %}
+<div class="form-group">
+    <label for="username">Nom d'utilisateur:</label>
+    {{form.username}}
+    {% if form.username.errors %}
+        {% for error in form.username.errors %}
+        <span class="text-danger"> {{error}}</span>
+        {% endfor %}
+    {% endif %}
+</div>
+<div class="form-group">
+    <label for="email">Adresse E-mail:</label>
+    {{form.email}}
+    {% if form.email.errors %}
+    {% for error in form.email.errors %}
+    <span class="text-danger"> {{error}}</span>
+    {% endfor %}
+    {% endif %}
+</div>
+<div class="form-group">
+    <label for="password1">Mot de passe:</label>
+    {{form.password1}}
+    {% if form.password1.errors %}
+        {% for error in form.password1.errors %}
+        <span class="text-danger"> {{error}}</span>
+        {% endfor %}
+    {% endif %}
+</div>
+<div class="form-group">
+    <label for="password2">Confirmation du mot de passe</label>
+    {{form.password2}}
+    {% if form.password2.errors %}
+     {% for error in form.password2.error %}
+    <span class="text-danger"> {{error}}</span>
+     {% endfor %}
+    {% endif %}
+</div>
+<button class="btn btn-success my-1">S'inscrire</button>
+</form>
+{% endblock content %}

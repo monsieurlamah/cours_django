@@ -1,0 +1,37 @@
+{% extends "blog/admin.html" %}
+{% block title %}
+    Dashboard - post detail
+{% endblock title %}
+{% block content %}
+<h2>{{post.title|title}}</h2>
+<div class="post-img">
+    <div class="img-fluid">
+        {% if post.image %}
+        <img src="{{post.image.url}}" width="100%" height="200px" alt="{{post.title}}">
+        {% else %}
+        <img src="http://placehold.it/300X300" width="100%" height="200px" alt="{{post.title}}">
+        {% endif %}
+    </div>
+</div>
+<div class="post-created_at">
+    <span>Published </span><strong> {{post.created_at|date:"D d M Y"}} {{post.created_at|time:"H:i"}}</strong><br>
+    <span>Author: </span><strong> {{post.author}}</strong>
+</div>
+<div class="post-category">
+    Categorie: <strong>{{post.category}}</strong>
+</div>
+{% if post.tags.all %} 
+    <div class="post-tags">
+        Tags ({{post.tags.all | length}}):
+        {% for tag in post.tags.all %}
+            <strong>
+                {{tag}} 
+            </strong>
+            {% if not forloop.last %}, {% endif %}
+        {% endfor %}
+    </div>
+{% endif %}
+<div class="post-content py-2">
+<p>{{post.content|safe}}</p>
+</div>
+{% endblock content %}

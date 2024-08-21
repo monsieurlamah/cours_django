@@ -1,0 +1,52 @@
+{% extends "blog/admin.html" %}
+{% block title %}
+    Blog - post
+{% endblock title %}
+{% block content %}
+    {% include "blog/components/paginator.html" with datas=posts %}
+    <div class="d-flex my-2 justify-content-end">
+        <a href="{% url 'dashboard_post_new' %}" class="btn btn-success">Créer un Post</a>
+    </div>
+    {% if posts %}
+    <table class="table border">
+        <thead>
+            <tr>
+            <th scope="col">#</th>
+            <th scope="col">Titre</th>
+            <th scope="col">Image</th>
+            <th scope="col">Date</th>
+            <th scope="col">Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for post in posts %}
+            <tr>
+            <th scope="row">{{post.id}}</th>
+            <td>{{post.title}}</td>
+            <td><img src="
+                {% if post.image %}
+                {{post.image.url}}
+                {% else %}
+                {{'http://placehold.it/300X300'}}
+                {% endif %}" alt="{{post.title}}" width="30" height="30" style="border-radius: 50px; object-fit:cover;"></td>
+            <td>{{post.created_at}}</td>
+            <td >
+                <div class="d-flex gap-2">
+                    <a href="{% url 'dashboard_post_view' post.slug %}" class="btn btn-success btn-sm">Voir</a>
+                    <a href="{% url 'dashboard_post_edit' post.slug %}" class="btn btn-info btn-sm">Editer</a>
+                    <form action="{% url 'dashboard_post_delete' post.slug %}" method="post">
+                        {% csrf_token %}
+                        <input type="hidden" name="_method" value="DELETE">
+                        <button class="btn btn-danger btn-sm" type="submit">Supprimer</button>
+                    </form>
+                </div>
+            </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    {% else %}
+        <p class="text-center">Aucun article disponible.</p>
+    {% endif %}
+    {% include "blog/components/paginator.html" with datas=posts %}
+{% endblock content %}

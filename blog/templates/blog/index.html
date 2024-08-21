@@ -1,0 +1,30 @@
+{% extends "blog/base.html" %}
+{% block title %}
+    Blog - Accueil
+{% endblock title %}
+{% block content %}
+    <h1>{{title}}</h1>
+
+
+    <h2>Liste des articles</h2>
+
+    
+<div class="row">
+    {% include "blog/components/paginator.html" with datas=posts %}
+    {% for post in posts %}
+    <div class="col-md-3">
+        <div class="card">
+            <img class="card-img-top" src="{% if post.image %} {{post.image.url}} {% else %} {{'http://placehold.it/300X300'}} {% endif %}" alt="Card image cap" width="200" height="200" style="object-fit: cover;">
+            <div class="card-body">
+              <h5 class="card-title">{{post.title}}</h5>
+              <a href="{% url 'single-post' post.slug %}" class="btn btn-primary">En savoir plus...</a>
+            </div>
+        </div>
+      </div>
+
+    {% endfor %}
+    {% include "blog/components/paginator.html" with datas=posts %}
+
+</div>
+    
+{% endblock content %}
